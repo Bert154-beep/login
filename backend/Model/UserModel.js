@@ -8,6 +8,40 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    Email: {
+        type: String
+    },
+    Address: {
+        type: String
+    },
+    country: {
+        type: String
+    },
+    PhoneNo: {
+        type: String
+    },
+    State:{
+        type: String
+    },
+    dob: {
+        type: String
+    },
+    city: {
+        type: String
+    },
+    postalcode: {
+        type: String
+    },
+    gender: {
+        type: String
+    },
+    Skills: [String],
+    shortBio:{
+        type:String
+    },
+    image: {
+        type: String
     }
 })
 

@@ -9,7 +9,7 @@ export default function AuthContextProvider({children}){
 
     const Navigate = useNavigate()
 
-    const [User, setUser] = useState(null)
+    const [User, setUser] = useState({})
 
     const loginUser = async (data)=>{
         try {
@@ -20,7 +20,7 @@ export default function AuthContextProvider({children}){
             if(responseData.error){
                 toast.error(responseData.error)
             } else{
-                Navigate('/Home')
+                Navigate('/Profile')
                 toast.success('Login Successful!')
             }
         } catch (error) {
@@ -53,11 +53,13 @@ export default function AuthContextProvider({children}){
                 }
             })
             const responseData = response.data
+            console.log(responseData)
 
             if(responseData.error){
                 toast.error(responseData.error)
             } else {
                 setUser(responseData)
+                console.log(User)
             }
         } catch (error) {
             console.log("An Error Occured!", error)
@@ -74,8 +76,30 @@ export default function AuthContextProvider({children}){
         }
     }
 
+    const EditProfile = async (formdata)=>{
+        try {
+            const token = localStorage.getItem('token')
+            const response = await api.post('/User/EditProfile', formdata, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            const responseData = response.data
+
+            if(responseData.error){
+                toast.error(responseData.error)
+            } else {
+                Navigate('/Profile')
+                toast.success("Profile Updated Successfully!")
+            }
+        } catch (error) {
+            console.log("An error Occured!", error)
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{loginUser, registerUser, getProfile, User, logout}}>
+        <AuthContext.Provider value={{loginUser, registerUser, getProfile, User, logout, EditProfile}}>
             {children}
         </AuthContext.Provider>
     )

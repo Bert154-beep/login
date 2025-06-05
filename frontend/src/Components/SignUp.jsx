@@ -4,75 +4,91 @@ import { Eye, EyeOff, UserCircle, ArrowLeft } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../Context/AuthContext'
+import { Button } from "@/components/ui/button"
+import {
+    Card,
+    CardAction,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 
 const SignUp = () => {
 
-    const [ShowPassword, setShowPassword] = useState(null)
-    const [ShowConfirmPassword, setShowConfirmPassword] = useState(null)
-
-    const [SignUpDetails, setSignUpDetails] = useState({
-        Username: '',
-        password: '',
-        ConfirmPassword: ''
-    })
-
     const { registerUser } = useContext(AuthContext)
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        registerUser(SignUpDetails)
+    const SignUpSchema = z.object({
+        Username: z.string().min(3, "Username is required!"),
+        password: z.string().min(5, "Password must be at least 5 characters!"),
+        confirmPassword: z.string().min(5, "Please confirm your password."),
+    })
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(SignUpSchema)
+    })
+
+    const onSubmit = (data) => {
+        registerUser(data)
     }
+
 
     return (
         <div className='w-full h-dvh bg-black flex items-center justify-center'>
-            <div className='w-[300px] h-[500px] rounded-3xl bg-white'>
-                <div className='p-5 flex items-center gap-3 '>
-                    <Link to='/'><ArrowLeft size={24} /></Link>
-                    <span className='font-bold text-2xl'>SignUp</span>
-                </div>
-                <form onSubmit={handleSubmit} action="">
-                    <div>
-                        <div className='flex p-2 flex-col'>
-                            <span className='mb-2 font-bold'>Username</span>
-                            <div className='w-full p-1 border-2 flex items-center'>
-                                <input value={SignUpDetails.Username} onChange={(e) => { setSignUpDetails({ ...SignUpDetails, Username: e.target.value }) }} className='w-full outline-none' type="text" />
-                                <div><UserCircle /></div>
-
-                            </div>
-                        </div>
-                        <div className='flex flex-col p-2'>
-                            <span className='mb-2 font-bold'>Password</span>
-                            <div className='w-full p-1 border-2 flex items-center'>
-                                <input value={SignUpDetails.password} onChange={(e) => { setSignUpDetails({ ...SignUpDetails, password: e.target.value }) }} className='w-full outline-none' type={ShowPassword ? 'text' : 'password'} />
-                                <button
-                                    type='button'
-                                    className='cursor-pointer'
-                                    onClick={() => { setShowPassword(!ShowPassword) }}
-                                >
-                                    {ShowPassword ? <EyeOff /> : <Eye />}
-                                </button>
-                            </div>
-                        </div>
-                        <div className='flex flex-col p-2'>
-                            <span className='mb-2 font-bold'>Confirm Password</span>
-                            <div className='w-full p-1 border-2 flex items-center'>
-                                <input value={SignUpDetails.ConfirmPassword} onChange={(e) => { setSignUpDetails({ ...SignUpDetails, ConfirmPassword: e.target.value }) }} className='w-full outline-none' type={ShowConfirmPassword ? 'text' : 'password'} />
-                                <button
-                                    type='button'
-                                    className='cursor-pointer'
-                                    onClick={() => { setShowConfirmPassword(!ShowConfirmPassword) }}
-                                >
-                                    {ShowConfirmPassword ? <EyeOff /> : <Eye />}
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className='flex items-center justify-center mt-10'>
-                            <button className='p-2 w-[250px] rounded-2xl cursor-pointer bg-blue-500 font-bold'>Sign Up</button>
-                        </div>
+            <Card className="w-full max-w-sm">
+                <CardHeader>
+                    <div className='flex items-center gap-2'>
+                        <Link to='/'><ArrowLeft className='cursor-pointer' /></Link>
+                        <CardTitle>Create your account</CardTitle>
                     </div>
-                </form>
-            </div>
+                    <CardDescription>
+                        Enter Username and Password to Create Your Account.
+                    </CardDescription>
+
+                </CardHeader>
+                <CardContent>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="flex flex-col gap-6">
+                            <div className="grid gap-2">
+                                <Label htmlFor="username">Username</Label>
+                                <Input
+                                    id="username"
+                                    type="text"
+                                    placeholder="Username"
+                                    required
+                                    {...register('Username')}
+                                />
+                                {errors.Username && (<p className='text-sm text-red-500'>{errors.Username.message}</p>)}
+                            </div>
+                            <div className="grid gap-2">
+                                <div className="flex items-center">
+                                    <Label htmlFor="password">Password</Label>
+
+                                </div>
+                                <Input {...register('password')} id="password" type="password" required />
+                                {errors.password && (<p className='text-sm text-red-500'>{errors.password.message}</p>)}
+                            </div>
+                            <div className="grid gap-2">
+                                <div className="flex items-center">
+                                    <Label htmlFor="ConfirmPassword">Confirm Password</Label>
+
+                                </div>
+                                <Input {...register('confirmPassword')} id="ConfirmPassword" type="password" required />
+                                {errors.confirmPassword && (<p className='text-sm text-red-500'>{errors.confirmPassword.message}</p>)}
+                            </div>
+                        </div>
+                        <Button type="submit" className="w-full mt-5">
+                            Sign Up
+                        </Button>
+                    </form>
+                </CardContent>
+            </Card>
         </div>
     )
 }

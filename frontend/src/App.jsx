@@ -1,7 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
 import Login from './Components/Login'
 import SignUp from './Components/SignUp'
-import Homepage from './Components/Homepage'
+import ProfilePage from './Components/ProfilePage'
+import EditProfile from './Components/EditProfile'
 import { Toaster } from 'react-hot-toast'
 
 
@@ -14,7 +15,8 @@ function App() {
     <Routes>
       <Route path='/' element={<Login/>}/>
       <Route path='/SignUp' element={<SignUp/>}/>
-      <Route path='/Home' element={<Homepage/>}/>
+      <Route path='/Profile' element={<ProfilePage/>}/>
+      <Route path='/EditProfile' element={<EditProfile/>}/>
     </Routes>
     </>
   )
