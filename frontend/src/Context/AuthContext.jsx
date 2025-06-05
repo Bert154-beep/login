@@ -90,7 +90,6 @@ export default function AuthContextProvider({children}){
             if(responseData.error){
                 toast.error(responseData.error)
             } else {
-                Navigate('/Profile')
                 toast.success("Profile Updated Successfully!")
             }
         } catch (error) {

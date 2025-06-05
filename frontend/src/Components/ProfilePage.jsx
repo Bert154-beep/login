@@ -24,7 +24,6 @@ const ProfilePage = () => {
   return (
     <div>
       <div className="max-w-4xl mx-auto p-6 space-y-6">
-        {/* Header */}
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">My Profile</h1>
           <Link to='/EditProfile'><Button className="gap-2">
@@ -52,7 +51,6 @@ const ProfilePage = () => {
         </Card>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {/* Personal Information */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -127,7 +125,7 @@ const ProfilePage = () => {
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-                {User?.Skills.map((skill, index)=>{
+                {Array.isArray(User?.Skills) && User.Skills.map((skill, index)=>{
                   return <Badge key={index} variant='secondary'>
                     {skill}
                   </Badge>

@@ -8,11 +8,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Upload, X, Plus } from "lucide-react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthContext } from '@/Context/AuthContext';
+import toast from 'react-hot-toast';
 
 const EditProfile = () => {
   const countries = [
@@ -67,6 +68,8 @@ const EditProfile = () => {
     setValue("Skills", updatedSkills, { shouldValidate: true });
   };
 
+  const Navigate = useNavigate()
+
   const onSubmit = (data) => {
     const formData = new FormData();
 
@@ -86,7 +89,8 @@ const EditProfile = () => {
       formData.append('profilePic', data.profilePic);
     }
 
-    EditProfile(formData);
+    EditProfile(formData)
+    toast.success("Profile Updated Succesfully!")
   };
 
   return (
