@@ -13,9 +13,10 @@ const upload = multer({
 })
 const RegisterUser = async (req,res)=>{
    try {
-     const {Username, password, confirmPassword} = req.body
+     const {Username, password, confirmPassword, role} = req.body
+     console.log(role)
 
-    if(!Username || !password || !confirmPassword){
+    if(!Username || !password || !confirmPassword || !role){
         return res.json({
             error: "All Fields Are Required!"
         })
@@ -37,7 +38,8 @@ const RegisterUser = async (req,res)=>{
 
     const newUser = await userModel.create({
         Username,
-        password: hashedPassword
+        password: hashedPassword,
+        role,
     })
 
     return res.json(newUser)
@@ -76,10 +78,11 @@ const loginUser = async (req,res)=>{
 
         const token = jwt.sign({
             userId: user._id,
-            username: user.Username
+            username: user.Username,
+            role: user.role,
         }, process.env.JWT_SECRET, {expiresIn: '1h'})
 
-        res.json({token})
+        res.json({token, role: user.role})
     } catch (error) {
         console.log("An Error Occured!", error)
     }

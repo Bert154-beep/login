@@ -5,37 +5,53 @@ import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext({})
 
-export default function AuthContextProvider({children}){
+export default function AuthContextProvider({ children }) {
 
     const Navigate = useNavigate()
 
-    const [User, setUser] = useState({})
+    const [User, setUser] = useState(null)
+    const [Loading, setLoading] = useState(true)
 
-    const loginUser = async (data)=>{
+    const loginUser = async (data) => {
         try {
+            setLoading(true)
             const response = await api.post('/User/Login', data)
             const responseData = response.data
             localStorage.setItem('token', responseData.token)
 
-            if(responseData.error){
+            const profile = await api.get('/User/getProfile', {
+                headers: {
+                    Authorization: `Bearer ${responseData.token}`
+                }
+            })
+
+            setUser(profile.data)
+
+            if (responseData.error) {
                 toast.error(responseData.error)
-            } else{
-                Navigate('/Profile')
-                toast.success('Login Successful!')
+            } else {
+                if (profile.data.role === 'user') {
+                    Navigate('/user')
+                } else {
+                    Navigate('/admin')
+                }
+                toast.success("Login Successful!")
             }
         } catch (error) {
             console.log("An Error Occured", error)
+        } finally {
+            setLoading(false)
         }
     }
 
-    const registerUser = async (data)=>{
+    const registerUser = async (data) => {
         try {
             const response = await api.post('/User/SignUp', data)
             const responseData = response.data
 
-            if(responseData.error){
+            if (responseData.error) {
                 toast.error(responseData.error)
-            }else{
+            } else {
                 Navigate('/')
                 toast.success("Registered Successfully!")
             }
@@ -44,29 +60,39 @@ export default function AuthContextProvider({children}){
         }
     }
 
-    const getProfile = async ()=>{
-        try {
-            const token = localStorage.getItem('token')
-            const response = await api.get('/User/getProfile', {
-                headers: {
-                    Authorization: `Bearer ${token}`
+    useEffect(() => {
+        const getProfile = async () => {
+            try {
+                setLoading(true)
+                const token = localStorage.getItem('token')
+                if (!token) {
+                    setLoading(false)
+                    return
                 }
-            })
-            const responseData = response.data
-            console.log(responseData)
+                const response = await api.get('/User/getProfile', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                const responseData = response.data
 
-            if(responseData.error){
-                toast.error(responseData.error)
-            } else {
-                setUser(responseData)
-                console.log(User)
+                if (responseData.error) {
+                    toast.error(responseData.error)
+                } else {
+                    setUser(responseData)
+                }
+            } catch (error) {
+                console.log("An Error Occured!", error)
+            } finally {
+                setLoading(false)
             }
-        } catch (error) {
-            console.log("An Error Occured!", error)
         }
-    }
 
-    const logout = ()=>{
+        getProfile()
+    }, [])
+
+
+    const logout = () => {
         try {
             localStorage.removeItem('token')
             Navigate('/')
@@ -76,7 +102,7 @@ export default function AuthContextProvider({children}){
         }
     }
 
-    const EditProfile = async (formdata)=>{
+    const EditProfile = async (formdata) => {
         try {
             const token = localStorage.getItem('token')
             const response = await api.post('/User/EditProfile', formdata, {
@@ -87,7 +113,7 @@ export default function AuthContextProvider({children}){
             })
             const responseData = response.data
 
-            if(responseData.error){
+            if (responseData.error) {
                 toast.error(responseData.error)
             } else {
                 toast.success("Profile Updated Successfully!")
@@ -98,7 +124,7 @@ export default function AuthContextProvider({children}){
     }
 
     return (
-        <AuthContext.Provider value={{loginUser, registerUser, getProfile, User, logout, EditProfile}}>
+        <AuthContext.Provider value={{ loginUser, registerUser, User, logout, EditProfile, Loading }}>
             {children}
         </AuthContext.Provider>
     )

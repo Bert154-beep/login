@@ -10,12 +10,9 @@ import { AuthContext } from '@/Context/AuthContext'
 
 const ProfilePage = () => {
 
-  const {getProfile, User, logout} = useContext(AuthContext)
+  const {User, logout} = useContext(AuthContext)
 
-  useEffect(() => {
-    getProfile()
-  }, [])
-
+ 
   if(!User){
     return <div>Loading...</div>
   }

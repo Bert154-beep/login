@@ -19,6 +19,8 @@ import { Label } from "@/components/ui/label"
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { RadioGroup, RadioGroupItem } from './ui/radio-group'
+
 
 const SignUp = () => {
 
@@ -28,9 +30,10 @@ const SignUp = () => {
         Username: z.string().min(3, "Username is required!"),
         password: z.string().min(5, "Password must be at least 5 characters!"),
         confirmPassword: z.string().min(5, "Please confirm your password."),
+        role: z.enum(['user', 'admin'], { errorMap: ()=> ({message: "Select A Role!"})})
     })
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
         resolver: zodResolver(SignUpSchema)
     })
 
@@ -81,6 +84,21 @@ const SignUp = () => {
                                 </div>
                                 <Input {...register('confirmPassword')} id="ConfirmPassword" type="password" required />
                                 {errors.confirmPassword && (<p className='text-sm text-red-500'>{errors.confirmPassword.message}</p>)}
+                            </div>
+                            <div className='grid gap-2'>
+                                <Label>Select A Role</Label>
+                                <div>
+                                    <RadioGroup value={watch("role")} onValueChange={(value)=>{setValue("role", value)}} className='flex gap-6'>
+                                        <div className='flex items-center gap-2'>
+                                            <RadioGroupItem value='user' id='user-role'/>
+                                            <Label htmlFor='user-role'>User</Label>
+                                        </div>
+                                        <div className='flex items-center gap-2'>
+                                            <RadioGroupItem value='admin' id='admin-role'/>
+                                            <Label htmlFor='admin-role'>Admin</Label>
+                                        </div>
+                                    </RadioGroup>
+                                </div>
                             </div>
                         </div>
                         <Button type="submit" className="w-full mt-5">
