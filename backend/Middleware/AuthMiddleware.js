@@ -11,6 +11,12 @@ const AuthMiddleware = async (req, res, next) => {
         }
         const token = AuthHeader && AuthHeader.split(' ')[1];
 
+        if(!token){
+            return res.json({
+                error: "Token Not Found!"
+            })
+        }
+
       
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);

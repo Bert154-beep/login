@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Edit, Mail, Phone, MapPin, Calendar, UserCircle } from "lucide-react"
+import { Edit, Mail, Phone, MapPin, Calendar, UserCircle, ArrowLeft } from "lucide-react"
 import { Link } from "react-router-dom"
 import { useContext, useEffect } from 'react'
 import { AuthContext } from '@/Context/AuthContext'
+
 
 const ProfilePage = () => {
 
@@ -22,7 +23,10 @@ const ProfilePage = () => {
     <div>
       <div className="max-w-4xl mx-auto p-6 space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">My Profile</h1>
+          <h1 className="font-bold flex items-center gap-2">
+            <Link to='/user'><ArrowLeft/></Link>
+            <div className='text-3xl'>My Profile</div>
+          </h1>
           <Link to='/EditProfile'><Button className="gap-2">
             <Edit className="h-4 w-4" />
             Edit Profile

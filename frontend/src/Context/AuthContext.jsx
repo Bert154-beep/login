@@ -9,7 +9,7 @@ export default function AuthContextProvider({ children }) {
 
     const Navigate = useNavigate()
 
-    const [User, setUser] = useState(null)
+    const [User, setUser] = useState([])
     const [Loading, setLoading] = useState(true)
 
     const loginUser = async (data) => {
