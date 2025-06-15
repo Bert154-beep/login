@@ -87,7 +87,7 @@ const AdminDashboard = () => {
                       <Label className='font-semibold text-sm'>Disk Usage</Label>
                       <span className='text-sm'>87%</span>
                     </div>
-                    <Progress value={87} />
+                    <Progress value={87}  />
                   </li>
                 </ul>
               </div>
