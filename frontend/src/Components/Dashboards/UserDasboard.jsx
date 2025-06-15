@@ -12,19 +12,19 @@ const UserDashboard = () => {
   const {User} = useContext(AuthContext)
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen lg:overflow-hidden">
       <DashboardSidebar />
 
       <div className="flex flex-col flex-1">
         <DashboardHeader />
 
-        <div className="p-4 border-l w-full  h-full">
+        <div className="p-4 border-l w-full  lg:h-full">
           <div className='flex flex-col p-5'>
-            <span className='font-extrabold text-3xl'>Welcome Back, {User?.Username}!</span>
-            <span className='text-sm text-gray-400'>Here's a summary of your recent activity</span>
+            <span className='font-extrabold lg:text-3xl'>Welcome Back, {User?.Username}!</span>
+            <span className='lg:text-sm text-xs text-gray-400'>Here's a summary of your recent activity</span>
           </div>
-          <div className='ml-5'>
-            <ul className='flex gap-4'>
+          <div className='lg:ml-5'>
+            <ul className='flex lg:flex-row flex-col gap-4'>
               <li className='h-[150px] w-[250px] border-2 rounded-2xl p-4'>
                 <div className='flex items-center justify-between'>
                   <Label>Tasks Completed</Label>
@@ -61,8 +61,8 @@ const UserDashboard = () => {
               </li>
             </ul>
           </div>
-          <div className='flex items-center p-3 ml-3 gap-8'>
-            <div className='h-[300px] w-[500px] border-2 rounded-2xl'>
+          <div className='flex lg:flex-row flex-col lg:items-center lg:p-3 mt-5 lg:ml-3 gap-8'>
+            <div className='h-[300px] lg:w-[500px] w-[300px] border-2 rounded-2xl'>
                 <div className='p-5'><p className='font-bold text-3xl'>Your Progress</p></div>
                 <div className='p-5'>
                   <ul className='flex flex-col gap-4'>
@@ -81,7 +81,7 @@ const UserDashboard = () => {
                   </ul>
                 </div>
             </div>
-            <div className='h-[300px] w-[500px] border-2 rounded-2xl'>
+            <div className='lg:h-[300px] lg:w-[500px] w-[300px] border-2 rounded-2xl'>
                 <div className='p-5'><p className='font-bold text-3xl'>Recent Activity</p></div>
                 <div className='ml-5'>
                   <ul className='flex flex-col gap-2'>

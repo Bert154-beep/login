@@ -12,7 +12,7 @@ const DashboardHeader = () => {
 
     return (
         <div className='w-full border-b'>
-            <div className='lg:p-3.5 p-4 flex items-center w-full justify-between'>
+            <div className='lg:p-3.5 p-2.5 flex items-center w-full justify-between'>
                 <Input placeholder='Search...' className='lg:w-[300px] w-[150px]' />
                 <div className='flex items-center lg:gap-3 gap-4'>
                     <Bell lg:size={24} size={20} />

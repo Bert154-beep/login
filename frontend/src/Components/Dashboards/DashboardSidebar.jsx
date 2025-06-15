@@ -14,7 +14,7 @@ const DashboardSidebar = () => {
         <div className='flex flex-col h-dvh border-black lg:w-[300px] w-[150px]'>
             <div className='flex items-center lg:p-4.5 p-4 border-b  border-r gap-2'>
                 <div><LayoutDashboard lg:size={32} /></div>
-                <div className='font-bold lg:text-xl'>{User?.role === 'admin' ? 'Admin' : "User"} Portal</div>
+                <div className='font-bold text-sm lg:text-xl'>{User?.role === 'admin' ? 'Admin' : "User"} Portal</div>
             </div>
             <div className='p-5 h-full'>
                 <ul className='flex flex-col gap-5'>
@@ -53,9 +53,8 @@ const DashboardSidebar = () => {
                     }
                 </ul>
             </div>
-            <div className='w-full mb-5 p-5 h-full  flex items-end'>
-
-                <Button onClick={() => { logout() }} className='lg:w-[250px] flex justify-start'>
+            <div className='w-full mb-5 p-5 lg:h-full flex items-end'>
+                <Button onClick={() => { logout() }} className='lg:w-[250px]  flex justify-start'>
                     <LogOut />
                     Logout
                 </Button>

@@ -12,19 +12,19 @@ const AdminDashboard = () => {
   const {User} = useContext(AuthContext)
 
   return (
-    <div className='flex h-screen overflow-hidden'>
+    <div className='flex h-screen lg:overflow-hidden'>
       <DashboardSidebar />
 
       <div className='flex flex-col flex-1'>
         <DashboardHeader />
 
-        <div className="p-4 border-l w-full  h-full">
+        <div className="p-4 border-l w-full  lg:h-full">
           <div className='flex flex-col p-5'>
-            <span className='font-extrabold text-3xl'>Admin Dashboard</span>
-            <span className='text-sm text-gray-400'>Welcome Back, {User?.Username}. Here's an overview of your system.</span>
+            <span className='font-extrabold lg:text-3xl'>Admin Dashboard</span>
+            <span className='lg:text-sm text-xs text-gray-400'>Welcome Back, {User?.Username}. Here's an overview of your system.</span>
           </div>
           <div className='ml-5'>
-            <ul className='flex gap-4'>
+            <ul className='flex lg:flex-row flex-col gap-4'>
               <li className='h-[150px] w-[250px] border-2 rounded-2xl p-4'>
                 <div className='flex items-center justify-between'>
                   <Label>Total Users</Label>
@@ -63,9 +63,9 @@ const AdminDashboard = () => {
               </li>
             </ul>
           </div>
-          <div className='flex items-center p-3 ml-3 gap-8'>
-            <div className='h-[300px] w-[500px] border-2 rounded-2xl'>
-              <div className='p-5'><p className='font-bold text-3xl'>System Health</p></div>
+          <div className='flex lg:flex-row flex-col lg:items-center p-3 lg:ml-3 ml-2 gap-8'>
+            <div className='h-[300px] lg:w-[500px] w-[250px] border-2 rounded-2xl'>
+              <div className='p-5'><p className='font-bold lg:text-3xl text-2xl'>System Health</p></div>
               <div className='p-5'>
                 <ul className='flex flex-col gap-4'>
                   <li className='flex flex-col gap-2'>
@@ -92,28 +92,28 @@ const AdminDashboard = () => {
                 </ul>
               </div>
             </div>
-            <div className='h-[300px] w-[500px] border-2 rounded-2xl'>
-              <div className='p-5'><p className='font-bold text-3xl'>Recent Activities</p></div>
+            <div className='h-[300px] lg:w-[500px] w-[250px] border-2 rounded-2xl'>
+              <div className='p-5'><p className='font-bold lg:text-3xl text-2xl'>Recent Activities</p></div>
               <div className='ml-5'>
                 <ul className='flex flex-col gap-5'>
                   <li className='flex items-center gap-4'>
                     <div className='p-2 bg-gray-200 w-[40px] rounded-3xl'><Users /></div>
                     <div className='flex flex-col'>
-                      <span className='text-xl font-bold'>New User Registered</span>
+                      <span className='lg:text-xl font-bold'>New User Registered</span>
                       <span className='text-xs text-gray-400'>2 Minutes Ago</span>
                     </div>
                   </li>
                   <li className='flex items-center gap-4'>
                     <div className='p-2 bg-gray-200 w-[40px] rounded-3xl'><Server /></div>
                     <div className='flex flex-col'>
-                      <span className='text-xl font-bold'>Server maintenance completed</span>
+                      <span className='lg:text-xl font-bold'>Server maintenance completed</span>
                       <span className='text-xs text-gray-400'>45 Minutes ago</span>
                     </div>
                   </li>
                   <li className='flex items-center gap-4'>
                     <div className='p-2 bg-gray-200 w-[40px] rounded-3xl'><Activity /></div>
                     <div className='flex flex-col'>
-                      <span className='text-xl font-bold'>Traffic spike detected</span>
+                      <span className='lg:text-xl font-bold'>Traffic spike detected</span>
                       <span className='text-xs text-gray-400'>3 hours ago</span>
                     </div>
                   </li>
