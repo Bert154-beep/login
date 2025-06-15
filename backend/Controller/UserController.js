@@ -14,7 +14,6 @@ const upload = multer({
 const RegisterUser = async (req,res)=>{
    try {
      const {Username, password, confirmPassword, role} = req.body
-     console.log(role)
 
     if(!Username || !password || !confirmPassword || !role){
         return res.json({
